@@ -1,7 +1,20 @@
 {
   "name": "DiscoCats",
-  "address": "0xC3Ca70388Fd19bEE0340Afd49A74B3D464309a5C",
+  "address": "0x275aD0388c07f8e876BDD88cA2FE0ff986b17f8B",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "changelastTokenId",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
     {
       "inputs": [
         {
@@ -68,8 +81,31 @@
       "inputs": [
         {
           "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "initialOwner",
           "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_incentivizingPeriod",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_votingPeriod",
+          "type": "uint256"
         }
       ],
       "stateMutability": "nonpayable",
@@ -139,19 +175,6 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "transferOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint256",
           "name": "_projectId",
           "type": "uint256"
@@ -206,6 +229,58 @@
           "internalType": "struct DiscoCats.Briber[]",
           "name": "_bribers",
           "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getStatus",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "_status",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getWinnerProjectId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "incentivizingPeriod",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "lastTokenId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -280,13 +355,32 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "status",
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenVoted",
       "outputs": [
         {
-          "internalType": "enum DiscoCats.govtStatus",
+          "internalType": "bool",
           "name": "",
-          "type": "uint8"
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalVotes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -312,27 +406,8 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_voterAddr",
-          "type": "address"
-        }
-      ],
-      "name": "voyerInfo",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "votes",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [],
-      "name": "winnerProjectId",
+      "name": "votingPeriod",
       "outputs": [
         {
           "internalType": "uint256",
@@ -345,5 +420,5 @@
     }
   ],
   "filePath": "discocats/DiscoCats.sol",
-  "pinnedAt": 1737638290770
+  "pinnedAt": 1737727904684
 }
