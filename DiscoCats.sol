@@ -151,6 +151,20 @@ contract DiscoCats is Ownable {
     {
         return projects[_projectId].bribers;
     }
+    function briberTokenInfo(uint256 _projectId,address _tokenAddress)
+        external
+        view
+        returns (uint number)
+    {   uint totalTokenCount=0;
+        Project storage newProject=projects[_projectId];
+        for (uint i=0; i<newProject.bribers.length; i++) 
+        {
+            if(newProject.bribers[i].tokenAddress==_tokenAddress){
+                totalTokenCount+=newProject.bribers[i].tokenAmnt;
+            }
+        }
+        return totalTokenCount;
+    }
 
     // function voyerInfo(address _voterAddr)
     //     external

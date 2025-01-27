@@ -107,6 +107,30 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "_projectId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "briberTokenInfo",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "number",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "_stateNumber",
 						"type": "uint256"
 					}
@@ -512,11 +536,11 @@
 			]
 		},
 		"DiscoCats.sol": {
-			"keccak256": "0x5c94a54bdee28bb1283ef0884e26d9c8ac0f4adfe75f8fdea3770809fb64e97b",
+			"keccak256": "0x94cfb41cc3ea6d16ffa30ffe6069b185cc36d58c37610ebe72f5b647a59945a5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1aa86d64a52fa14cbc55722e273b646b9154bdf94ca84aef7412c88de47c0df5",
-				"dweb:/ipfs/QmQbNUGCP7waYuzHJFoqC8N148ryZr5KftSzRDfV2TMZxE"
+				"bzz-raw://e98a012c50b8f9ab1cabf21993edcdd073fa0d9635658363c037f6ec51c0a564",
+				"dweb:/ipfs/QmYvQVaMwgfUF5r6cPuAfQEwvUoyheGhJQivfyprRnhPyD"
 			]
 		}
 	},

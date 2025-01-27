@@ -1,6 +1,6 @@
 {
   "name": "DiscoCats",
-  "address": "0x275aD0388c07f8e876BDD88cA2FE0ff986b17f8B",
+  "address": "0x08b9195595614b4adbedd9fd6321747bc46e3187",
   "abi": [
     {
       "inputs": [
@@ -419,6 +419,6 @@
       "type": "function"
     }
   ],
-  "filePath": "discocats/DiscoCats.sol",
-  "pinnedAt": 1737727904684
+  "filePath": "discoCats/DiscoCats.sol",
+  "pinnedAt": 1737984582366
 }
