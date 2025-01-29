@@ -98,6 +98,23 @@
 						"internalType": "struct DiscoCats.Briber[]",
 						"name": "_bribers",
 						"type": "tuple[]"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "briberAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "tokenAmnt",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct DiscoCats.NativeBriber[]",
+						"name": "_nativebribers",
+						"type": "tuple[]"
 					}
 				],
 				"stateMutability": "view",
@@ -216,6 +233,24 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_tokenAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "incentiviseProject",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "incentivizingPeriod",
 				"outputs": [
@@ -248,6 +283,25 @@
 					{
 						"internalType": "uint256",
 						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_projectId",
+						"type": "uint256"
+					}
+				],
+				"name": "nativebriberInfo",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_total",
 						"type": "uint256"
 					}
 				],
@@ -536,11 +590,11 @@
 			]
 		},
 		"DiscoCats.sol": {
-			"keccak256": "0x94cfb41cc3ea6d16ffa30ffe6069b185cc36d58c37610ebe72f5b647a59945a5",
+			"keccak256": "0x7604935b59d568dd5511cb53395cf41510c5c92b11cef74daa78abe6db32c617",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e98a012c50b8f9ab1cabf21993edcdd073fa0d9635658363c037f6ec51c0a564",
-				"dweb:/ipfs/QmYvQVaMwgfUF5r6cPuAfQEwvUoyheGhJQivfyprRnhPyD"
+				"bzz-raw://ef2a357a8e660ee90c56ed958a895d70ace18128eee38133e5165591fca24ab1",
+				"dweb:/ipfs/QmaTrmHWGGbWaEGyBQWVu7pJrn5uZuVgMer3Fh8V2Ax6EE"
 			]
 		}
 	},

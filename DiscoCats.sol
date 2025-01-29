@@ -16,11 +16,18 @@ contract DiscoCats is Ownable {
         address briberAddress;
         address tokenAddress;
         uint256 tokenAmnt;
+        uint projectId;
+    }
+    struct NativeBriber {
+        address briberAddress;
+        uint256 tokenAmnt;
+        uint projectId;
     }
     struct Project {
         string name;
         address projectOwner;
-        Briber[] bribers;
+        address[] bribers;
+        address[] nativeBribers;
         uint256 votes;
     }
     enum govtStatus {
@@ -30,6 +37,10 @@ contract DiscoCats is Ownable {
     }
     govtStatus internal status = govtStatus.incentivising;
     mapping(address => uint256) public voters;
+    uint briberCount=0;
+    uint nativeBriberCount=0;
+    mapping(address => Briber[]) public bribers;
+    mapping(address => NativeBriber[]) public nativeBribers;
     uint256 public totalVotes = 0;
     uint256 public lastTokenId = 10;
     mapping(uint256 => bool) public tokenVoted;
@@ -48,6 +59,10 @@ contract DiscoCats is Ownable {
             (_incentivizingPeriod * 60 );//* 60 * 24
         votingPeriod = incentivizingPeriod + (_votingPeriod * 60 );//* 60 * 24
     }
+
+    //events
+    event briberEvent(uint indexed projectId, address indexed briber, address indexed  tokenAddress,uint amount);
+    event nativeBriberEvent(uint indexed projectId, address indexed briber,uint amount);
 
     function initializeProject(string memory _name) public onlyOwner {
         // Project memory tempProject;
@@ -85,15 +100,41 @@ contract DiscoCats is Ownable {
             "transaction failed"
         );
         Project storage newProject = projects[id];
+        Briber[] storage tempx=bribers[msg.sender];
         Briber memory temp;
         temp.briberAddress = msg.sender;
         temp.tokenAddress = _tokenAddress;
         temp.tokenAmnt = _tokenAmount;
-        newProject.bribers.push(temp);
+        temp.projectId=id;
+        tempx.push(temp);
+        emit briberEvent(id,msg.sender,_tokenAddress,_tokenAmount);
+        newProject.bribers.push(msg.sender);
+        briberCount=briberCount+1;
+        
+    }
+    function incentiviseProject(
+        uint256 id
+    
+    ) public payable  {
+        // require(status == govtStatus.incentivising, "cant do it now");
+        require(block.timestamp <= incentivizingPeriod, "cant do it now");
+
+        require(msg.value > 0, "Amount must be greater than 0");
+        Project storage newProject = projects[id];
+        NativeBriber[] storage tempx = nativeBribers[msg.sender];
+        NativeBriber memory temp;
+        temp.briberAddress = msg.sender;
+        // temp.tokenAddress = address("nativeToken");
+        temp.tokenAmnt = msg.value;
+        temp.projectId=id;
+        tempx.push(temp);
+        emit nativeBriberEvent(id,msg.sender,msg.value);
+        newProject.nativeBribers.push(msg.sender);
+        nativeBriberCount=nativeBriberCount+1;
         
     }
 
-    function vote(uint256 _projectId) public {
+    function vote(uint256 _projectId,uint256[] calldata tokenIds) public {
         // require(status == govtStatus.voting, "cant do it now");
         require(
             block.timestamp >= incentivizingPeriod &&
@@ -113,20 +154,19 @@ contract DiscoCats is Ownable {
                 IERC721(nftContractAddress).balanceOf(msg.sender),
             "can cast more vote"
         );
-        for (uint256 i = 0; i <= lastTokenId; i++) {
+        for (uint256 i = 0; i < tokenIds.length; i++) {
             // bool alreadyvoted=false;
-            if (IERC721(nftContractAddress).ownerOf(i) == msg.sender) {
-                if (tokenVoted[i] == false) {
+            if (IERC721(nftContractAddress).ownerOf(tokenIds[i]) == msg.sender) {
+                if (tokenVoted[tokenIds[i]] == false) {
                     voters[msg.sender]++;
                     newProject.votes++;
                     totalVotes++;
-                    tokenVoted[i] = true;
+                    tokenVoted[tokenIds[i]] = true;
                     break;
                 }
             }
         }
-    }
-
+    } 
     function changelastTokenId(uint256 _id) external onlyOwner {
         lastTokenId = _id;
     }
@@ -144,35 +184,7 @@ contract DiscoCats is Ownable {
         }
     }
 
-    function briberInfo(uint256 _projectId)
-        external
-        view
-        returns (Briber[] memory _bribers)
-    {
-        return projects[_projectId].bribers;
-    }
-    function briberTokenInfo(uint256 _projectId,address _tokenAddress)
-        external
-        view
-        returns (uint number)
-    {   uint totalTokenCount=0;
-        Project storage newProject=projects[_projectId];
-        for (uint i=0; i<newProject.bribers.length; i++) 
-        {
-            if(newProject.bribers[i].tokenAddress==_tokenAddress){
-                totalTokenCount+=newProject.bribers[i].tokenAmnt;
-            }
-        }
-        return totalTokenCount;
-    }
-
-    // function voyerInfo(address _voterAddr)
-    //     external
-    //     view
-    //     returns (uint votes)
-    // {
-    //     return voters[_voterAddr];
-    // }
+  
 
     function setNftAddress(address _nftAddress) external onlyOwner {
         nftContractAddress = _nftAddress;
@@ -186,61 +198,95 @@ contract DiscoCats is Ownable {
             _projectId != getWinnerProjectId(),
             "cant claim winner project"
         );
-        // bool isBriber=false;
-        Project storage newProject = projects[_projectId];
-        for (uint256 i = 0; i < newProject.bribers.length; i++) {
-            if (newProject.bribers[i].briberAddress == msg.sender) {
-                require(
-                    IERC20(newProject.bribers[i].tokenAddress).transfer(
+        
+        Briber[] storage tempx=bribers[msg.sender];
+        for (uint256 i = 0; i < tempx.length; i++) 
+        {
+            if(tempx[i].projectId!=getWinnerProjectId()){
+
+            require(
+                    IERC20(tempx[i].tokenAddress).transfer(
                         msg.sender,
-                        newProject.bribers[i].tokenAmnt
+                        tempx[i].tokenAmnt
                     ),
                     "transaction failed"
                 );
-                newProject.bribers[i].tokenAmnt=0;
+                tempx[i].tokenAmnt=0;
+            }
+        }
+
+        NativeBriber[] storage tempy = nativeBribers[msg.sender];
+        for (uint256 i = 0; i < tempy.length; i++) 
+        {
+            if(tempy[i].projectId!=getWinnerProjectId()){
+            require(payable( tempy[i].briberAddress).send(tempy[i].tokenAmnt));
+                tempy[i].tokenAmnt=0;
             }
         }
     }
 
-    function withdrawWinnerProject(address _receiver) public onlyOwner {
+    function withdrawWinnerProject(address _receiver,uint _start,uint _end) public onlyOwner {
         // require(status == govtStatus.claiming, "cant do it now");
         require(block.timestamp >= votingPeriod, "cant do it now");
         // require(_projectId == winnerProjectId, " claim winner project");
         uint256 winnerId = getWinnerProjectId();
         Project storage newProject = projects[winnerId];
-        for (uint256 i = 0; i < newProject.bribers.length; i++) {
+        for (uint256 i = _start; i < _end; i++) {
+            Briber[] storage tempx=bribers[newProject.bribers[i]];
+
+            for (uint256 j = 0; j < tempx.length; j++) 
+            {
+                
+            if(tempx[j].projectId==getWinnerProjectId()){
+
             require(
-                IERC20(newProject.bribers[i].tokenAddress).transfer(
+                IERC20(tempx[j].tokenAddress).transfer(
                     _receiver,
-                    newProject.bribers[i].tokenAmnt
+                    tempx[j].tokenAmnt
                 ),
                 "transaction failed"
             );
-            newProject.bribers[i].tokenAmnt=0;
+            tempx[j].tokenAmnt=0;
+            }
+            }
+            // delete newProject.bribers[i];
         }
-    }
+        for (uint256 i = _start; i < _end; i++) {
+            NativeBriber[] storage tempx=nativeBribers[newProject.nativeBribers[i]];
 
-    function changeState(uint256 _stateNumber) public onlyOwner {
-        if (_stateNumber == 0) {
-            status = govtStatus.incentivising;
+            for (uint256 j = 0; i < tempx.length; j++) 
+            {
+                
+            if(tempx[j].projectId==getWinnerProjectId()){
+
+             require(payable( _receiver).send(tempx[j].tokenAmnt));
+
+            tempx[j].tokenAmnt=0;
+            }
+            }
+            // delete newProject.nativeBribers[i];
         }
-        if (_stateNumber == 1) {
-            status = govtStatus.voting;
-        }
-        if (_stateNumber == 2) {
-            // for (uint256 i = 1; i <= projectCount; i++) {
-            //     if (projects[i].votes > winnerProjectId) {
-            //         winnerProjectId = i;
-            //     }
-            // }
-            status = govtStatus.claiming;
-        }
+        
     }
+    
+
+    // function changeState(uint256 _stateNumber) public onlyOwner {
+    //     if (_stateNumber == 0) {
+    //         status = govtStatus.incentivising;
+    //     }
+    //     if (_stateNumber == 1) {
+    //         status = govtStatus.voting;
+    //     }
+    //     if (_stateNumber == 2) {
+            
+    //         status = govtStatus.claiming;
+    //     }
+    // }
 
     function getWinnerProjectId() public view returns (uint256 _id) {
         uint256 _winnerProjectId = 1;
         for (uint256 i = 1; i <= projectCount; i++) {
-            if (projects[i].votes > _winnerProjectId) {
+            if (projects[i].votes > projects[_winnerProjectId].votes) {
                 _winnerProjectId = i;
             }
         }
