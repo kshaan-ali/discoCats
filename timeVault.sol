@@ -5,8 +5,9 @@ pragma solidity ^0.8.22;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract TimeVault is Ownable {
+contract TimeVault is Ownable, ReentrancyGuard {
     address public tokenAddress;
     address public nftAddress;
     uint256 public tokenDecimals;
@@ -53,7 +54,7 @@ contract TimeVault is Ownable {
     }
 
     function joinVault(uint256 _nftAmount) public {
-        require(getNftCount()<=TimeNft(nftAddress).nftLimit());
+        require(getNftCount() <= TimeNft(nftAddress).nftLimit());
         require(_nftAmount <= nftLimitPerAddress, "cant mint more");
         // require(_tokenAmount >= _nftAmount * nftPrice, "sent less");
         Vault storage tempVault = vaults[msg.sender];
@@ -84,7 +85,7 @@ contract TimeVault is Ownable {
     }
 
     function getNftCount() public view returns (uint256 _nftAmount) {
-        return TimeNft(nftAddress).totalSupply();
+        return TimeNft(nftAddress).tokenIdCounter();
     }
 
     function yieldGenerated() external view returns (uint256 _amount) {
@@ -113,16 +114,19 @@ contract TimeVault is Ownable {
         activeYeildedFunds += _amount;
     }
 
-    function claimBack() public {
+    function claimBack() public  {
         // Vault storage tempVault=vaults[msg.sender];
         // require(_nftAmount<=tempVault.nftAmount,"cant claimmore than minted");
         uint256 _nftBalance = TimeNft(nftAddress).balanceOf(msg.sender);
         require(_nftBalance > 0, "You don't own any NFTs");
+        require(
+            TimeNft(nftAddress).isApprovedForAll(msg.sender, address(this))
+        );
         // require(_nftBalance>=_nftAmount);
         for (uint256 i = 0; i < _nftBalance; i++) {
             uint256 _tknId = TimeNft(nftAddress).tokenOfOwnerByIndex(
                 msg.sender,
-                i
+                0
             );
             if (nftClaimed[_tknId] == false) {
                 uint256 amountTobeClaim = (yieldedFunds) / getNftCount();
@@ -132,8 +136,10 @@ contract TimeVault is Ownable {
                 );
                 // tempVault.nftAmount=tempVault.nftAmount-_nftAmount;
                 activeYeildedFunds = activeYeildedFunds - amountTobeClaim;
-                emit claimedNft(_tknId, msg.sender, amountTobeClaim);
                 nftClaimed[_tknId] = true;
+
+                TimeNft(nftAddress).burn(_tknId);
+                emit claimedNft(_tknId, msg.sender, amountTobeClaim);
             }
         }
     }
@@ -143,19 +149,26 @@ import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {ERC721Pausable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import {ERC721Burnable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 
-contract TimeNft is ERC721, ERC721Pausable, ERC721Enumerable, Ownable {
-    uint256 private _nextTokenId = 1;
+contract TimeNft is
+    ERC721,
+    ERC721Pausable,
+    ERC721Enumerable,
+    Ownable,
+    ERC721Burnable
+{
+    uint256 public tokenIdCounter = 0;
     string private _baseTokenURI;
     address public vaultAddress;
     uint256 public nftLimit;
 
     constructor(
         address initialOwner,
-        string memory baseURI,
+        // string memory baseURI,
         uint256 _nftLimit
     ) ERC721("TimeNft", "TNFT") Ownable(initialOwner) {
-        _baseTokenURI = baseURI;
+        _baseTokenURI ="https://plum-imaginative-guan-725.mypinata.cloud/ipfs/bafkreihetnwdfbtwz67754zldog4x73f2sqv2supmpy72eg7rgmj2izvb4";
 
         nftLimit = _nftLimit;
     }
@@ -169,7 +182,7 @@ contract TimeNft is ERC721, ERC721Pausable, ERC721Enumerable, Ownable {
     }
 
     function nftCount() public view returns (uint256 _nftCount) {
-        return _nextTokenId;
+        return tokenIdCounter;
     }
 
     function tokenURI(uint256) public view override returns (string memory) {
@@ -185,15 +198,15 @@ contract TimeNft is ERC721, ERC721Pausable, ERC721Enumerable, Ownable {
     }
 
     function safeMint(address to, uint256 amount) public {
-        require(nftLimit >= _nextTokenId + amount);
+        require(nftLimit >= tokenIdCounter + amount);
         require(
             msg.sender == owner() || msg.sender == vaultAddress,
             "can mint"
         );
         for (uint256 i = 0; i < amount; i++) {
-            uint256 tokenId = _nextTokenId;
+            tokenIdCounter++;
+            uint256 tokenId = tokenIdCounter;
             _safeMint(to, tokenId);
-            _nextTokenId++;
         }
     }
 
