@@ -5,9 +5,17 @@ pragma solidity ^0.8.22;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract TimeVault is Ownable, ReentrancyGuard {
+contract TimeVaultV1 is
+    Initializable,
+    UUPSUpgradeable,
+    OwnableUpgradeable,
+    ReentrancyGuardUpgradeable
+{
     address public tokenAddress;
     address public nftAddress;
     uint256 public tokenDecimals;
@@ -24,14 +32,30 @@ contract TimeVault is Ownable, ReentrancyGuard {
     }
     mapping(address => Vault) public vaults;
     mapping(uint256 => bool) public nftClaimed;
+    uint256 public joiningPeriod;
+    uint256 public claimingPeriod;
 
-    constructor(
+    // constructor(
+    //     address initialOwner,
+    //     // uint256 _nftPrice,
+    //     // uint256 _nftLimitPerAddress,
+    //     address _tokenAddress,
+    //     address _nftAddress
+    // ) Ownable(initialOwner) {
+    //     nftPrice = 1e18; //_nftPrice;
+    //     nftLimitPerAddress = 10; //_nftLimitPerAddress;
+    //     tokenAddress = _tokenAddress;
+    //     nftAddress = _nftAddress;
+    // }
+    function initialize(
         address initialOwner,
         // uint256 _nftPrice,
         // uint256 _nftLimitPerAddress,
         address _tokenAddress,
         address _nftAddress
-    ) Ownable(initialOwner) {
+    ) public initializer {
+        __Ownable_init(initialOwner);
+        __UUPSUpgradeable_init();
         nftPrice = 1e18; //_nftPrice;
         nftLimitPerAddress = 10; //_nftLimitPerAddress;
         tokenAddress = _tokenAddress;
@@ -44,6 +68,13 @@ contract TimeVault is Ownable, ReentrancyGuard {
         uint256 _claimedAmount
     );
     event joinVaultEvent(address indexed _joiner, uint256 _nftamount);
+
+    function setNftPrice(uint256 _nftPrice) external onlyOwner{
+        nftPrice = _nftPrice;
+    }
+    function setNftLimitPerAddress(uint256 _nftLimitPerAddress) external onlyOwner{
+        nftLimitPerAddress = _nftLimitPerAddress;
+    }
 
     function setTokenAddress(address _tokenAddress, uint256 _tokenDecimals)
         public
@@ -114,7 +145,7 @@ contract TimeVault is Ownable, ReentrancyGuard {
         activeYeildedFunds += _amount;
     }
 
-    function claimBack() public  {
+    function claimBack() public {
         // Vault storage tempVault=vaults[msg.sender];
         // require(_nftAmount<=tempVault.nftAmount,"cant claimmore than minted");
         uint256 _nftBalance = TimeNft(nftAddress).balanceOf(msg.sender);
@@ -143,6 +174,16 @@ contract TimeVault is Ownable, ReentrancyGuard {
             }
         }
     }
+
+    function _authorizeUpgrade(address newImplementation)
+        internal
+        override
+        onlyOwner
+    {}
+
+    function upgrade(address newImplementation) public onlyOwner {
+        upgradeToAndCall(newImplementation, "");
+    }
 }
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -168,7 +209,7 @@ contract TimeNft is
         // string memory baseURI,
         uint256 _nftLimit
     ) ERC721("TimeNft", "TNFT") Ownable(initialOwner) {
-        _baseTokenURI ="https://plum-imaginative-guan-725.mypinata.cloud/ipfs/bafkreihetnwdfbtwz67754zldog4x73f2sqv2supmpy72eg7rgmj2izvb4";
+        _baseTokenURI = "https://plum-imaginative-guan-725.mypinata.cloud/ipfs/bafkreihetnwdfbtwz67754zldog4x73f2sqv2supmpy72eg7rgmj2izvb4";
 
         nftLimit = _nftLimit;
     }
