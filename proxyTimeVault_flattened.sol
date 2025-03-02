@@ -678,8 +678,26 @@ contract ERC1967Proxy is Proxy {
 
 pragma solidity ^0.8.20;
 
+
 contract MyContractProxy is ERC1967Proxy {
-    constructor(address _logic, address initialOwner, address _tokenAddress, address _nftAddress)
-        ERC1967Proxy(_logic, abi.encodeWithSignature("initialize(address,address,address)", initialOwner, _tokenAddress, _nftAddress))
+    constructor(
+        address _logic,
+        uint256 _nftPrice,
+        uint256 _nftLimitPerAddress,
+        address initialOwner,
+        address _tokenAddress,
+        uint256 _nftLimit
+    )
+        ERC1967Proxy(
+            _logic,
+            abi.encodeWithSignature(
+                "initialize(uint256,uint256,address,address,uint256)",
+                _nftPrice,
+                _nftLimitPerAddress,
+                initialOwner,
+                _tokenAddress,
+                _nftLimit
+            )
+        )
     {}
 }

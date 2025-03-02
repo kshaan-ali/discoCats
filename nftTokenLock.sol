@@ -76,7 +76,7 @@ contract PartnerLock is Ownable {
         temp.tokenCount += _erc20Count;
         totalfunds += _erc20Count;
         for (uint256 i = 0; i < _erc721TokenId.length; i++) {
-            IERC721(erc721Address).safeTransferFrom(
+            IERC721(erc721Address).transferFrom(
                 msg.sender,
                 address(this),
                 _erc721TokenId[i]
@@ -120,7 +120,7 @@ contract PartnerLock is Ownable {
 
         temp.tokenCount = 0;
         for (uint256 i = 0; i < temp.nftIds.length; i++) {
-            IERC721(erc721Address).safeTransferFrom(
+            IERC721(erc721Address).transferFrom(
                 address(this),
                 msg.sender,
                 temp.nftIds[i]
@@ -133,7 +133,7 @@ contract PartnerLock is Ownable {
     function withdrawFund() public onlyOwner {
         require(totalfunds > 0, "no funds to withdraw");
         IERC20(erc20Address).transfer(owner(), totalfunds);
-        totalfunds = 0;
+        // totalfunds = 0;
     }
 
     function depositYieldedFunds(uint256 _amnt) public onlyOwner {

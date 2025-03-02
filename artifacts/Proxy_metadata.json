@@ -1,0 +1,50 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			}
+		],
+		"devdoc": {
+			"details": "This abstract contract provides a fallback function that delegates all calls to another contract using the EVM instruction `delegatecall`. We refer to the second contract as the _implementation_ behind the proxy, and it has to be specified by overriding the virtual {_implementation} function. Additionally, delegation to the implementation can be triggered manually through the {_fallback} function, or to a different contract through the {_delegate} function. The success and return data of the delegated call will be returned back to the caller of the proxy.",
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"proxyTimeVault_flattened.sol": "Proxy"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"proxyTimeVault_flattened.sol": {
+			"keccak256": "0x832ccb2cbdaa15151fdec1df96f6beeaad4a513d49056de93eacecb6d9af7433",
+			"urls": [
+				"bzz-raw://82a6ad9970c57a5f061d4ff9b84d69d3d3dcc1b969a6bd71dd42dca3fe7dc545",
+				"dweb:/ipfs/QmPYyFKyvaGgXzJYn5gbauswgxDmajvR3GbH3HYA17GbWe"
+			]
+		}
+	},
+	"version": 1
+}

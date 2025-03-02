@@ -9,47 +9,22 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_logic",
+						"name": "admin",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nftPrice",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nftLimitPerAddress",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "initialOwner",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "_tokenAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nftLimit",
-						"type": "uint256"
 					}
 				],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
+				"name": "ERC1967InvalidAdmin",
+				"type": "error"
 			},
 			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "target",
+						"name": "beacon",
 						"type": "address"
 					}
 				],
-				"name": "AddressEmptyCode",
+				"name": "ERC1967InvalidBeacon",
 				"type": "error"
 			},
 			{
@@ -67,35 +42,19 @@
 				"inputs": [],
 				"name": "ERC1967NonPayable",
 				"type": "error"
-			},
-			{
-				"inputs": [],
-				"name": "FailedCall",
-				"type": "error"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "implementation",
-						"type": "address"
-					}
-				],
-				"name": "Upgraded",
-				"type": "event"
-			},
-			{
-				"stateMutability": "payable",
-				"type": "fallback"
 			}
 		],
 		"devdoc": {
+			"details": "This library provides getters and event emitting update functions for https://eips.ethereum.org/EIPS/eip-1967[ERC-1967] slots.",
 			"errors": {
-				"AddressEmptyCode(address)": [
+				"ERC1967InvalidAdmin(address)": [
 					{
-						"details": "There's no code at `target` (it is not a contract)."
+						"details": "The `admin` of the proxy is invalid."
+					}
+				],
+				"ERC1967InvalidBeacon(address)": [
+					{
+						"details": "The `beacon` of the proxy is invalid."
 					}
 				],
 				"ERC1967InvalidImplementation(address)": [
@@ -107,20 +66,21 @@
 					{
 						"details": "An upgrade function sees `msg.value > 0` that may be lost."
 					}
-				],
-				"FailedCall()": [
-					{
-						"details": "A call to an address target failed. The target may have reverted."
-					}
 				]
-			},
-			"events": {
-				"Upgraded(address)": {
-					"details": "Emitted when the implementation is upgraded."
-				}
 			},
 			"kind": "dev",
 			"methods": {},
+			"stateVariables": {
+				"ADMIN_SLOT": {
+					"details": "Storage slot with the admin of the contract. This is the keccak-256 hash of \"eip1967.proxy.admin\" subtracted by 1."
+				},
+				"BEACON_SLOT": {
+					"details": "The storage slot of the UpgradeableBeacon contract which defines the implementation for this proxy. This is the keccak-256 hash of \"eip1967.proxy.beacon\" subtracted by 1."
+				},
+				"IMPLEMENTATION_SLOT": {
+					"details": "Storage slot with the address of the current implementation. This is the keccak-256 hash of \"eip1967.proxy.implementation\" subtracted by 1."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -131,7 +91,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"proxyTimeVault_flattened.sol": "MyContractProxy"
+			"proxyTimeVault_flattened.sol": "ERC1967Utils"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},

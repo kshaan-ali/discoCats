@@ -9,36 +9,16 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_logic",
+						"name": "implementation",
 						"type": "address"
 					},
 					{
-						"internalType": "uint256",
-						"name": "_nftPrice",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nftLimitPerAddress",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "initialOwner",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "_tokenAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nftLimit",
-						"type": "uint256"
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "payable",
 				"type": "constructor"
 			},
 			{
@@ -92,6 +72,7 @@
 			}
 		],
 		"devdoc": {
+			"details": "This contract implements an upgradeable proxy. It is upgradeable because calls are delegated to an implementation address that can be changed. This address is stored in storage in the location specified by https://eips.ethereum.org/EIPS/eip-1967[ERC-1967], so that it doesn't conflict with the storage layout of the implementation behind the proxy.",
 			"errors": {
 				"AddressEmptyCode(address)": [
 					{
@@ -120,7 +101,11 @@
 				}
 			},
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"constructor": {
+					"details": "Initializes the upgradeable proxy with an initial implementation specified by `implementation`. If `_data` is nonempty, it's used as data in a delegate call to `implementation`. This will typically be an encoded function call, and allows initializing the storage of the proxy like a Solidity constructor. Requirements: - If `data` is empty, `msg.value` must be zero."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -131,7 +116,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"proxyTimeVault_flattened.sol": "MyContractProxy"
+			"proxyTimeVault_flattened.sol": "ERC1967Proxy"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},

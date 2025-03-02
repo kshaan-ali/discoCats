@@ -1,0 +1,64 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "target",
+						"type": "address"
+					}
+				],
+				"name": "AddressEmptyCode",
+				"type": "error"
+			}
+		],
+		"devdoc": {
+			"details": "Collection of functions related to the address type",
+			"errors": {
+				"AddressEmptyCode(address)": [
+					{
+						"details": "There's no code at `target` (it is not a contract)."
+					}
+				]
+			},
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"proxyTimeVault_flattened.sol": "Address"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"proxyTimeVault_flattened.sol": {
+			"keccak256": "0x832ccb2cbdaa15151fdec1df96f6beeaad4a513d49056de93eacecb6d9af7433",
+			"urls": [
+				"bzz-raw://82a6ad9970c57a5f061d4ff9b84d69d3d3dcc1b969a6bd71dd42dca3fe7dc545",
+				"dweb:/ipfs/QmPYyFKyvaGgXzJYn5gbauswgxDmajvR3GbH3HYA17GbWe"
+			]
+		}
+	},
+	"version": 1
+}

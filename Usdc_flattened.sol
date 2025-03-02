@@ -4104,7 +4104,7 @@ abstract contract Ownable is Context {
     }
 }
 
-// File: MyToken.sol
+// File: Usdc.sol
 
 
 // Compatible with OpenZeppelin Contracts ^5.0.0
@@ -4113,11 +4113,11 @@ pragma solidity ^0.8.22;
 
 
 
-contract MyToken is ERC20, Ownable, ERC20Permit {
+contract Usdc is ERC20, Ownable, ERC20Permit {
     constructor(address initialOwner)
-        ERC20("MyToken", "MTK")
+        ERC20("Usdc", "Usdc")
         Ownable(initialOwner)
-        ERC20Permit("MyToken")
+        ERC20Permit("Usdc")
     {}
 
     function mint(address to, uint256 amount) public onlyOwner {

@@ -48,18 +48,20 @@ contract TimeVaultV1 is
     //     nftAddress = _nftAddress;
     // }
     function initialize(
+        
+        uint256 _nftPrice,
+        uint256 _nftLimitPerAddress,
         address initialOwner,
-        // uint256 _nftPrice,
-        // uint256 _nftLimitPerAddress,
         address _tokenAddress,
-        address _nftAddress
+        uint256 _nftLimit
     ) public initializer {
         __Ownable_init(initialOwner);
         __UUPSUpgradeable_init();
-        nftPrice = 1e18; //_nftPrice;
-        nftLimitPerAddress = 10; //_nftLimitPerAddress;
+        nftPrice = _nftPrice; //_nftPrice;
+        nftLimitPerAddress = _nftLimitPerAddress; //_nftLimitPerAddress;
         tokenAddress = _tokenAddress;
-        nftAddress = _nftAddress;
+        TimeNft nftContract = new TimeNft(address(this), _nftLimit);
+        nftAddress= address(nftContract);
     }
 
     event claimedNft(
@@ -191,6 +193,7 @@ import {ERC721Pausable} from "@openzeppelin/contracts/token/ERC721/extensions/ER
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import {ERC721Burnable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+
 
 contract TimeNft is
     ERC721,

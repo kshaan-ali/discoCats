@@ -5181,7 +5181,7 @@ abstract contract ERC721Burnable is Context, ERC721 {
     }
 }
 
-// File: timeVault.sol
+// File: timeVaultv1.sol
 
 
 // Compatible with OpenZeppelin Contracts ^5.0.0
@@ -5232,18 +5232,20 @@ contract TimeVaultV1 is
     //     nftAddress = _nftAddress;
     // }
     function initialize(
+        
+        uint256 _nftPrice,
+        uint256 _nftLimitPerAddress,
         address initialOwner,
-        // uint256 _nftPrice,
-        // uint256 _nftLimitPerAddress,
         address _tokenAddress,
-        address _nftAddress
+        uint256 _nftLimit
     ) public initializer {
         __Ownable_init(initialOwner);
         __UUPSUpgradeable_init();
-        nftPrice = 1e18; //_nftPrice;
-        nftLimitPerAddress = 10; //_nftLimitPerAddress;
+        nftPrice = _nftPrice; //_nftPrice;
+        nftLimitPerAddress = _nftLimitPerAddress; //_nftLimitPerAddress;
         tokenAddress = _tokenAddress;
-        nftAddress = _nftAddress;
+        TimeNft nftContract = new TimeNft(address(this), _nftLimit);
+        nftAddress= address(nftContract);
     }
 
     event claimedNft(
@@ -5369,6 +5371,7 @@ contract TimeVaultV1 is
         upgradeToAndCall(newImplementation, "");
     }
 }
+
 
 
 
