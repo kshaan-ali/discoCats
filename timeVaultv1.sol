@@ -62,6 +62,8 @@ contract TimeVaultV1 is
         tokenAddress = _tokenAddress;
         TimeNft nftContract = new TimeNft(address(this), _nftLimit);
         nftAddress= address(nftContract);
+        joiningPeriod=3*86400+block.timestamp;
+        claimingPeriod=60*86400+joiningPeriod;
     }
 
     event claimedNft(
@@ -77,6 +79,10 @@ contract TimeVaultV1 is
     function setNftLimitPerAddress(uint256 _nftLimitPerAddress) external onlyOwner{
         nftLimitPerAddress = _nftLimitPerAddress;
     }
+    function setTimePeriod(uint256 _joiningPeriod, uint256 _claim)public onlyOwner{
+        joiningPeriod=_joiningPeriod*86400+block.timestamp;
+        claimingPeriod = _claim*86400+joiningPeriod;
+    }
 
     function setTokenAddress(address _tokenAddress, uint256 _tokenDecimals)
         public
@@ -87,6 +93,7 @@ contract TimeVaultV1 is
     }
 
     function joinVault(uint256 _nftAmount) public {
+        require(getState()==0,"waiting period");
         require(getNftCount() <= TimeNft(nftAddress).nftLimit());
         require(_nftAmount <= nftLimitPerAddress, "cant mint more");
         // require(_tokenAmount >= _nftAmount * nftPrice, "sent less");
@@ -146,10 +153,20 @@ contract TimeVaultV1 is
         yieldedFunds += _amount;
         activeYeildedFunds += _amount;
     }
+    function getState()public view returns (uint){
+        if(block.timestamp<joiningPeriod){
+            return 0;
+        }else if(block.timestamp>joiningPeriod && block.timestamp<claimingPeriod){
+            return 1;
+        }else {
+            return 2;
+        }
+    }
 
     function claimBack() public {
         // Vault storage tempVault=vaults[msg.sender];
         // require(_nftAmount<=tempVault.nftAmount,"cant claimmore than minted");
+        require(getState()==2,"wait for period");
         uint256 _nftBalance = TimeNft(nftAddress).balanceOf(msg.sender);
         require(_nftBalance > 0, "You don't own any NFTs");
         require(
