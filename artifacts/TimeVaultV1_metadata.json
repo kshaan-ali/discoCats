@@ -298,6 +298,16 @@
 						"internalType": "uint256",
 						"name": "_nftLimit",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_joiningPeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_claimingPeriod",
+						"type": "uint256"
 					}
 				],
 				"name": "initialize",
@@ -444,6 +454,24 @@
 					}
 				],
 				"name": "setNftPrice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_joiningPeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_claim",
+						"type": "uint256"
+					}
+				],
+				"name": "setTimePeriod",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -995,11 +1023,11 @@
 			]
 		},
 		"timeVaultv1.sol": {
-			"keccak256": "0x90cae0249f2be4b3aab12ee97baecb22e6dc4bca63eef9095bbb328d1dbf9dd2",
+			"keccak256": "0xaf684f4b4d937874962c3fabc406fcc91e1d4c4e3e8391a79b72618abb6ef598",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a15cfc56b63b509f0571c7e597fcf73f4d2d70149baa3fae62c43ff0bbc1a36b",
-				"dweb:/ipfs/QmWgzjtrKFSQhe2VTr6VwWnQGRRbTyt6mx31yKwQvWjtMZ"
+				"bzz-raw://f16b58ef59de779ad2bac0b468b30e75b72f57484268a83d2478c1a25d18e3ed",
+				"dweb:/ipfs/QmTCKt2gSJi7zcbMmn9aPDBki6EvFXTZj9f3X7UNG4LU14"
 			]
 		}
 	},

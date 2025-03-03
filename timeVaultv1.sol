@@ -53,7 +53,9 @@ contract TimeVaultV1 is
         uint256 _nftLimitPerAddress,
         address initialOwner,
         address _tokenAddress,
-        uint256 _nftLimit
+        uint256 _nftLimit,
+        uint _joiningPeriod,
+        uint _claimingPeriod
     ) public initializer {
         __Ownable_init(initialOwner);
         __UUPSUpgradeable_init();
@@ -62,8 +64,8 @@ contract TimeVaultV1 is
         tokenAddress = _tokenAddress;
         TimeNft nftContract = new TimeNft(address(this), _nftLimit);
         nftAddress= address(nftContract);
-        joiningPeriod=3*86400+block.timestamp;
-        claimingPeriod=60*86400+joiningPeriod;
+        joiningPeriod=_joiningPeriod*86400+block.timestamp;
+        claimingPeriod=_claimingPeriod*86400+joiningPeriod;
     }
 
     event claimedNft(

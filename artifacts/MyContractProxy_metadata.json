@@ -36,6 +36,16 @@
 						"internalType": "uint256",
 						"name": "_nftLimit",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_joiningPeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_claimingPeriod",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -210,11 +220,11 @@
 			]
 		},
 		"proxyTimeVault.sol": {
-			"keccak256": "0x47fbf2b6a8555eecf2d7a1d7e4e5a7904b55936d55fc21b170f280d69b9c1e2e",
+			"keccak256": "0xf67be95925a4e4a5bdf502aacb8a4f4e2bf7a6df8658d394d42de80e7a4788f7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5259408790fedbac34940b432ee8887675e202c489a7b4a545605af75e7c5021",
-				"dweb:/ipfs/QmQgtvpcwgtfUmik8Thv4FiyU2CEuRpsPgp4bh1DoCqWMQ"
+				"bzz-raw://039f584b1ae3df90e84f05c1bcff55e9af9b8ec128d8ef4e93366346d890171d",
+				"dweb:/ipfs/Qmdd5ro4hymp6ySxAYbtZazNxPXEgtxkXLMmNthkMWju9S"
 			]
 		}
 	},

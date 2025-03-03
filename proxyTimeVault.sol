@@ -10,17 +10,21 @@ contract MyContractProxy is ERC1967Proxy {
         uint256 _nftLimitPerAddress,
         address initialOwner,
         address _tokenAddress,
-        uint256 _nftLimit
+        uint256 _nftLimit,
+        uint256 _joiningPeriod,
+        uint256 _claimingPeriod
     )
         ERC1967Proxy(
             _logic,
             abi.encodeWithSignature(
-                "initialize(uint256,uint256,address,address,uint256)",
+                "initialize(uint256,uint256,address,address,uint256,uint256,uint256)",
                 _nftPrice,
                 _nftLimitPerAddress,
                 initialOwner,
                 _tokenAddress,
-                _nftLimit
+                _nftLimit,
+                _joiningPeriod,
+                _claimingPeriod
             )
         )
     {}

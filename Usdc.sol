@@ -13,7 +13,7 @@ contract Usdc is ERC20, Ownable, ERC20Permit {
         ERC20Permit("Usdc")
     {}
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public  {
         _mint(to, amount);
     }
 }
