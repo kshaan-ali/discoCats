@@ -629,19 +629,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "yieldGeneratedPercentage",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "_percentage",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "yieldedFunds",
 				"outputs": [
 					{
@@ -1023,11 +1010,11 @@
 			]
 		},
 		"timeVaultv1.sol": {
-			"keccak256": "0xaf684f4b4d937874962c3fabc406fcc91e1d4c4e3e8391a79b72618abb6ef598",
+			"keccak256": "0x3a8fd42056ea7b86744b3cde0f2c68b195c082be468cbc6004f8365216815fe0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f16b58ef59de779ad2bac0b468b30e75b72f57484268a83d2478c1a25d18e3ed",
-				"dweb:/ipfs/QmTCKt2gSJi7zcbMmn9aPDBki6EvFXTZj9f3X7UNG4LU14"
+				"bzz-raw://0381545c95df8001896b16bb8ef902ad0151b64d56677b95db91a5d7722949cd",
+				"dweb:/ipfs/QmZPX2E5sHvuaeYbRXH6eQnhiRip59TjNsp2bxw7tXrhvZ"
 			]
 		}
 	},

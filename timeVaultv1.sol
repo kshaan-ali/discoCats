@@ -134,14 +134,14 @@ contract TimeVaultV1 is
         return yieldedFunds - totalFunds;
     }
 
-    function yieldGeneratedPercentage()
-        external
-        view
-        returns (uint256 _percentage)
-    {
-        if (totalFunds == 0) return 0;
-        return ((yieldedFunds - totalFunds) * 100) / totalFunds;
-    }
+    // function yieldGeneratedPercentage()
+    //     external
+    //     view
+    //     returns (uint256 _percentage)
+    // {
+    //     if (totalFunds == 0) return 0;
+    //     return ((yieldedFunds - totalFunds) * 100) / totalFunds;
+    // }
 
     function depositExternalFunds(uint256 _amount) public {
         require(
@@ -165,12 +165,12 @@ contract TimeVaultV1 is
         }
     }
 
-    function claimBack() public {
+    function claimBack() public nonReentrant  {
         // Vault storage tempVault=vaults[msg.sender];
         // require(_nftAmount<=tempVault.nftAmount,"cant claimmore than minted");
         require(getState()==2,"wait for period");
         uint256 _nftBalance = TimeNft(nftAddress).balanceOf(msg.sender);
-        require(_nftBalance > 0, "You don't own any NFTs");
+        require(_nftBalance > 0, "no NFTs");
         require(
             TimeNft(nftAddress).isApprovedForAll(msg.sender, address(this))
         );
