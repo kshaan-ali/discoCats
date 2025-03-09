@@ -1244,11 +1244,11 @@
 			]
 		},
 		"timeVaultv1.sol": {
-			"keccak256": "0x3a8fd42056ea7b86744b3cde0f2c68b195c082be468cbc6004f8365216815fe0",
+			"keccak256": "0x4f60d52eb4dbda6b49c228681f8b16cf69658574440f94b7f83c31687ae83521",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0381545c95df8001896b16bb8ef902ad0151b64d56677b95db91a5d7722949cd",
-				"dweb:/ipfs/QmZPX2E5sHvuaeYbRXH6eQnhiRip59TjNsp2bxw7tXrhvZ"
+				"bzz-raw://5746ca3e37ddafe3ebd65f591aff220237564cc1dff4c9fcb4a819887108eff5",
+				"dweb:/ipfs/QmUhVaJXMXnmv86e7Z18ZkNBW4dQCSQaLBihGQGa238hem"
 			]
 		}
 	},

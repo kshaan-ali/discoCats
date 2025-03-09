@@ -64,8 +64,8 @@ contract TimeVaultV1 is
         tokenAddress = _tokenAddress;
         TimeNft nftContract = new TimeNft(address(this), _nftLimit);
         nftAddress= address(nftContract);
-        joiningPeriod=_joiningPeriod*86400+block.timestamp;
-        claimingPeriod=_claimingPeriod*86400+joiningPeriod;
+        joiningPeriod=_joiningPeriod;
+        claimingPeriod=_claimingPeriod;
     }
 
     event claimedNft(
