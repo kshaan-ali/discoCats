@@ -1,77 +1,74 @@
 # TimeVaultV1
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.22-363636.svg?logo=solidity)
+![TimeVault Logo](https://via.placeholder.com/728x90.png?text=TimeVault)
 
-## 📌 Overview
-TimeVaultV1 is a smart contract designed for decentralized token vault management, supporting ERC20 tokens and ERC721 NFTs. It enables users to join a vault, deposit tokens, claim NFTs, and withdraw funds after predefined time periods.
+## Overview
+TimeVaultV1 is a smart contract designed for secure time-locked NFT staking using ERC-20 tokens. It integrates OpenZeppelin's upgradeable contracts to ensure flexibility and security.
 
-## 🚀 Features
-- **Upgradeable** using UUPS proxy pattern
-- **Ownable** contract with administrative control
-- **Reentrancy protected** to ensure secure transactions
-- **NFT minting & burning** for vault participants
-- **Time-based vault states** (Joining, Claiming, Withdrawable)
-- **Yield tracking** for deposited funds
+## Features
+- **Upgradeable Smart Contract**: Built using OpenZeppelin's UUPS pattern.
+- **NFT Staking Mechanism**: Users can stake ERC-20 tokens to receive NFTs.
+- **Time-Locked Funds**: Implements joining and claiming periods for staking.
+- **Yield Distribution**: Rewards users based on their stake.
+- **Ownership Control**: Utilizes Ownable for restricted access.
 
-## 🔧 Installation
-To deploy and interact with TimeVaultV1, ensure you have:
+## Smart Contracts
 
-```bash
-npm install
+### **TimeVaultV1.sol**
+This is the main contract that manages deposits, NFT minting, and funds withdrawal.
+
+#### **Key Functions:**
+- `initialize(...)`: Initializes contract with necessary parameters.
+- `joinVault(uint256 _nftAmount)`: Allows users to stake tokens and mint NFTs.
+- `claimBack()`: Users can claim their rewards after the staking period.
+- `withdrawAllFunds(address receiver)`: Owner can withdraw the total active funds.
+- `setNftPrice(uint256 _nftPrice)`: Updates the NFT price.
+- `setTimePeriod(uint256 _joiningPeriod, uint256 _claimingPeriod)`: Sets the joining and claiming period.
+- `depositExternalFunds(uint256 _amount)`: Allows external deposits to increase yield.
+- `getState()`: Returns the contract's current state (joining, waiting, or claiming).
+
+### **TimeNft.sol**
+A custom ERC-721 NFT contract used for representing locked funds.
+
+#### **Key Functions:**
+- `safeMint(address to, uint256 amount)`: Mints NFTs to users.
+- `burn(uint256 tokenId)`: Burns NFTs upon claiming.
+- `pause() / unpause()`: Enables and disables transfers.
+
+### **MyContractProxy.sol**
+Implements UUPS proxy to enable contract upgrades.
+
+## Installation
+Ensure you have **Foundry** and **Remix** installed for local development.
+
+```sh
+forge install
+forge build
 ```
 
-or if using Yarn:
+For deploying via Remix:
+1. Open [Remix IDE](https://remix.ethereum.org/).
+2. Compile `TimeVaultV1.sol`.
+3. Deploy with your desired parameters.
 
-```bash
-yarn install
-```
+## Usage
+1. **Join Vault**:
+   ```solidity
+   vault.joinVault(2);
+   ```
+2. **Claim Rewards**:
+   ```solidity
+   vault.claimBack();
+   ```
 
-## 📜 Smart Contracts
-### `TimeVaultV1.sol`
-The main vault contract with functionalities:
-```solidity
-function joinVault(uint256 _nftAmount) public;
-function withdrawAllFunds(address receiver) public onlyOwner;
-function claimBack() public nonReentrant;
-function setTimePeriod(uint256 _joiningPeriod, uint256 _claimingPeriod) public onlyOwner;
-```
+## Security Considerations
+- Uses **ReentrancyGuardUpgradeable** to prevent reentrancy attacks.
+- Implements **OwnableUpgradeable** for restricted access to admin functions.
+- Uses **ERC1967Proxy** for upgradeability.
 
-### `TimeNft.sol`
-An ERC721 NFT contract for tracking vault participation.
-```solidity
-function safeMint(address to, uint256 amount) public;
-function burn(uint256 tokenId) public;
-```
-
-### `MyContractProxy.sol`
-A proxy contract for upgradeability:
-```solidity
-constructor(
-    address _logic,
-    uint256 _nftPrice,
-    uint256 _nftLimitPerAddress,
-    address initialOwner,
-    address _tokenAddress,
-    uint256 _nftLimit,
-    uint256 _joiningPeriod,
-    uint256 _claimingPeriod
-) ERC1967Proxy(...)
-```
-
-## 📖 Usage
-1. **Deploy the contracts** using a Solidity-compatible environment.
-2. **Set the vault parameters** (token address, limits, and periods).
-3. **Users can join the vault** by depositing tokens.
-4. **Claim back funds & NFTs** after the claiming period.
-
-## 🛠 Built With
-- Solidity `^0.8.22`
-- OpenZeppelin Contracts `^5.0.0`
-- Hardhat / Foundry (for development & testing)
-
-## 📝 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## License
+This project is licensed under the **MIT License**.
 
 ---
-
+*Built with ❤️ using Solidity, Remix & Foundry*
 
