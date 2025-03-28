@@ -36,6 +36,11 @@
 						"internalType": "uint256",
 						"name": "_claimingPeriod",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address payable",
+						"name": "_PartnerContract",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -133,6 +138,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "PartnerContract",
+				"outputs": [
+					{
+						"internalType": "address payable",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "activeFunds",
 				"outputs": [
 					{
@@ -159,6 +177,13 @@
 			},
 			{
 				"inputs": [],
+				"name": "automateCoumpounding",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "claimBack",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -175,13 +200,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "depositExternalFunds",
-				"outputs": [],
-				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -365,19 +383,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address payable",
-						"name": "receiver",
-						"type": "address"
-					}
-				],
-				"name": "withdrawAllFunds",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "yieldedFunds",
 				"outputs": [
@@ -389,6 +394,10 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -431,7 +440,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"timeVaults/curvanceTimeVault.sol": "nativeTimeVault"
+			"timeVaults/nativeTimeVaultV2.sol": "nativeTimeVault"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -709,12 +718,12 @@
 				"dweb:/ipfs/QmVUSvooZKEdEdap619tcJjTLcAuH6QBdZqAzWwnAXZAWJ"
 			]
 		},
-		"timeVaults/curvanceTimeVault.sol": {
-			"keccak256": "0xfef8b9440029a3448f42c22bc9c1ac27d631e9e89ac4c7452a62208d526d9958",
+		"timeVaults/nativeTimeVaultV2.sol": {
+			"keccak256": "0x92a6cb6bf72838f99ee6fbaef311fc457ff864342f355dd9da4a9f142cc61313",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c97e8681d6b16385a810660a4f9e8f3f242bb52ef2d79d5aa6e1b22a6e9c986a",
-				"dweb:/ipfs/QmPRZesfBf1wKVQWk3hxurKUwGrTsgujZtcZicszHCacFp"
+				"bzz-raw://956c865d2310fec382f415915e7399218b623630e1be328ea27aec37182222b3",
+				"dweb:/ipfs/QmVy9b339BDqLCs4ieBtmKvzc98zjHsyExAApqWrgEdtxB"
 			]
 		}
 	},
