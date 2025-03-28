@@ -6,175 +6,48 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "initialOwner",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nftLimit",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
-			},
-			{
 				"inputs": [],
-				"name": "ERC721EnumerableForbiddenBatchMint",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "sender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					}
-				],
-				"name": "ERC721IncorrectOwner",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "operator",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "ERC721InsufficientApproval",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "approver",
-						"type": "address"
-					}
-				],
-				"name": "ERC721InvalidApprover",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "operator",
-						"type": "address"
-					}
-				],
-				"name": "ERC721InvalidOperator",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					}
-				],
-				"name": "ERC721InvalidOwner",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "receiver",
-						"type": "address"
-					}
-				],
-				"name": "ERC721InvalidReceiver",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "sender",
-						"type": "address"
-					}
-				],
-				"name": "ERC721InvalidSender",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "ERC721NonexistentToken",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "ERC721OutOfBoundsIndex",
+				"name": "PluginDelegable_InvalidParameter",
 				"type": "error"
 			},
 			{
 				"inputs": [],
-				"name": "EnforcedPause",
+				"name": "PluginDelegable__DelegatingDisabled",
 				"type": "error"
 			},
 			{
 				"inputs": [],
-				"name": "ExpectedPause",
+				"name": "PluginDelegable__InvalidCentralRegistry",
 				"type": "error"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					}
-				],
-				"name": "OwnableInvalidOwner",
+				"inputs": [],
+				"name": "PluginDelegable__Unauthorized",
 				"type": "error"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
-					}
-				],
-				"name": "OwnableUnauthorizedAccount",
+				"inputs": [],
+				"name": "Reentrancy",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "UniversalBalance__InsufficientBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "UniversalBalance__InvalidParameter",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "UniversalBalance__SlippageError",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "UniversalBalance__Unauthorized",
 				"type": "error"
 			},
 			{
@@ -189,42 +62,23 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "approved",
+						"name": "delegate",
 						"type": "address"
 					},
 					{
-						"indexed": true,
+						"indexed": false,
 						"internalType": "uint256",
-						"name": "tokenId",
+						"name": "approvalIndex",
 						"type": "uint256"
-					}
-				],
-				"name": "Approval",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "operator",
-						"type": "address"
 					},
 					{
 						"indexed": false,
 						"internalType": "bool",
-						"name": "approved",
+						"name": "isApproved",
 						"type": "bool"
 					}
 				],
-				"name": "ApprovalForAll",
+				"name": "DelegateApproval",
 				"type": "event"
 			},
 			{
@@ -233,30 +87,29 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "previousOwner",
+						"name": "by",
 						"type": "address"
 					},
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "newOwner",
+						"name": "owner",
 						"type": "address"
-					}
-				],
-				"name": "OwnershipTransferred",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
+					},
 					{
 						"indexed": false,
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "lendingDeposit",
+						"type": "bool"
 					}
 				],
-				"name": "Paused",
+				"name": "Deposit",
 				"type": "event"
 			},
 			{
@@ -265,7 +118,7 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "from",
+						"name": "by",
 						"type": "address"
 					},
 					{
@@ -276,110 +129,35 @@
 					},
 					{
 						"indexed": true,
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "Transfer",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
 					{
 						"indexed": false,
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "assets",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "lendingRedemption",
+						"type": "bool"
 					}
 				],
-				"name": "Unpaused",
+				"name": "Withdraw",
 				"type": "event"
 			},
 			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "approve",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
+						"name": "user",
 						"type": "address"
 					}
 				],
-				"name": "balanceOf",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "burn",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "getApproved",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "operator",
-						"type": "address"
-					}
-				],
-				"name": "isApprovedForAll",
+				"name": "checkDelegationDisabled",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -391,52 +169,60 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "name",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "nftCount",
-				"outputs": [
+				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_nftCount",
+						"name": "amount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "willLend",
+						"type": "bool"
 					}
 				],
-				"stateMutability": "view",
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "nftLimit",
-				"outputs": [
+				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "amount",
 						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
+					},
+					{
+						"internalType": "bool",
+						"name": "willLend",
+						"type": "bool"
+					},
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "recipient",
 						"type": "address"
+					}
+				],
+				"name": "depositFor",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserApprovalIndex",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -445,32 +231,17 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "ownerOf",
-				"outputs": [
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "delegate",
 						"type": "address"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "pause",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "paused",
+				"name": "isDelegate",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -482,8 +253,57 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "renounceOwnership",
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "depositSum",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "amounts",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "bool[]",
+						"name": "willLend",
+						"type": "bool[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "recipients",
+						"type": "address[]"
+					}
+				],
+				"name": "multiDepositFor",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "amounts",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "bool[]",
+						"name": "forceLentRedemption",
+						"type": "bool[]"
+					},
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "owners",
+						"type": "address[]"
+					}
+				],
+				"name": "multiWithdrawFor",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -492,7 +312,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "token",
 						"type": "address"
 					},
 					{
@@ -501,7 +321,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "safeMint",
+				"name": "rescueToken",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -510,67 +330,16 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "safeTransferFrom",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bytes",
-						"name": "data",
-						"type": "bytes"
-					}
-				],
-				"name": "safeTransferFrom",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "operator",
+						"name": "delegate",
 						"type": "address"
 					},
 					{
 						"internalType": "bool",
-						"name": "approved",
+						"name": "isApproved",
 						"type": "bool"
 					}
 				],
-				"name": "setApprovalForAll",
+				"name": "setDelegateApproval",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -578,111 +347,153 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "baseURI",
-						"type": "string"
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "fromLent",
+						"type": "bool"
 					}
 				],
-				"name": "setBaseURI",
-				"outputs": [],
+				"name": "shiftBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountWithdrawn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "lendingBalanceUsed",
+						"type": "bool"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "forceLentRedemption",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "willLend",
+						"type": "bool"
+					},
+					{
 						"internalType": "address",
-						"name": "_vaultAddress",
+						"name": "recipient",
 						"type": "address"
 					}
 				],
-				"name": "setVaultAddress",
-				"outputs": [],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountTransferred",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "lendingBalanceUsed",
+						"type": "bool"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "bytes4",
-						"name": "interfaceId",
-						"type": "bytes4"
-					}
-				],
-				"name": "supportsInterface",
-				"outputs": [
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
 					{
 						"internalType": "bool",
-						"name": "",
+						"name": "forceLentRedemption",
 						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "symbol",
-				"outputs": [
+					},
 					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
+						"internalType": "bool",
+						"name": "willLend",
+						"type": "bool"
+					},
 					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "tokenByIndex",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "tokenIdCounter",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
 					{
 						"internalType": "address",
 						"name": "owner",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
 					}
 				],
-				"name": "tokenOfOwnerByIndex",
+				"name": "transferFor",
 				"outputs": [
 					{
 						"internalType": "uint256",
+						"name": "amountTransferred",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "lendingBalanceUsed",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "underlying",
+				"outputs": [
+					{
+						"internalType": "address",
 						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "updateRewardDelegation",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "userBalances",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "sittingBalance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lentBalance",
 						"type": "uint256"
 					}
 				],
@@ -693,268 +504,79 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "amount",
 						"type": "uint256"
-					}
-				],
-				"name": "tokenURI",
-				"outputs": [
+					},
 					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "totalSupply",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
+						"internalType": "bool",
+						"name": "forceLentRedemption",
+						"type": "bool"
 					},
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "recipient",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
 					}
 				],
-				"name": "transferFrom",
-				"outputs": [],
+				"name": "withdraw",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountWithdrawn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "lendingBalanceUsed",
+						"type": "bool"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "newOwner",
-						"type": "address"
-					}
-				],
-				"name": "transferOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "unpause",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "vaultAddress",
-				"outputs": [
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "forceLentRedemption",
+						"type": "bool"
+					},
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "owner",
 						"type": "address"
 					}
 				],
-				"stateMutability": "view",
+				"name": "withdrawFor",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountWithdrawn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "lendingBalanceUsed",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
 		"devdoc": {
-			"errors": {
-				"ERC721EnumerableForbiddenBatchMint()": [
-					{
-						"details": "Batch mint is not allowed."
-					}
-				],
-				"ERC721IncorrectOwner(address,uint256,address)": [
-					{
-						"details": "Indicates an error related to the ownership over a particular token. Used in transfers.",
-						"params": {
-							"owner": "Address of the current owner of a token.",
-							"sender": "Address whose tokens are being transferred.",
-							"tokenId": "Identifier number of a token."
-						}
-					}
-				],
-				"ERC721InsufficientApproval(address,uint256)": [
-					{
-						"details": "Indicates a failure with the `operator`’s approval. Used in transfers.",
-						"params": {
-							"operator": "Address that may be allowed to operate on tokens without being their owner.",
-							"tokenId": "Identifier number of a token."
-						}
-					}
-				],
-				"ERC721InvalidApprover(address)": [
-					{
-						"details": "Indicates a failure with the `approver` of a token to be approved. Used in approvals.",
-						"params": {
-							"approver": "Address initiating an approval operation."
-						}
-					}
-				],
-				"ERC721InvalidOperator(address)": [
-					{
-						"details": "Indicates a failure with the `operator` to be approved. Used in approvals.",
-						"params": {
-							"operator": "Address that may be allowed to operate on tokens without being their owner."
-						}
-					}
-				],
-				"ERC721InvalidOwner(address)": [
-					{
-						"details": "Indicates that an address can't be an owner. For example, `address(0)` is a forbidden owner in ERC-20. Used in balance queries.",
-						"params": {
-							"owner": "Address of the current owner of a token."
-						}
-					}
-				],
-				"ERC721InvalidReceiver(address)": [
-					{
-						"details": "Indicates a failure with the token `receiver`. Used in transfers.",
-						"params": {
-							"receiver": "Address to which tokens are being transferred."
-						}
-					}
-				],
-				"ERC721InvalidSender(address)": [
-					{
-						"details": "Indicates a failure with the token `sender`. Used in transfers.",
-						"params": {
-							"sender": "Address whose tokens are being transferred."
-						}
-					}
-				],
-				"ERC721NonexistentToken(uint256)": [
-					{
-						"details": "Indicates a `tokenId` whose `owner` is the zero address.",
-						"params": {
-							"tokenId": "Identifier number of a token."
-						}
-					}
-				],
-				"ERC721OutOfBoundsIndex(address,uint256)": [
-					{
-						"details": "An `owner`'s token query was out of bounds for `index`. NOTE: The owner being `address(0)` indicates a global out of bounds index."
-					}
-				],
-				"EnforcedPause()": [
-					{
-						"details": "The operation failed because the contract is paused."
-					}
-				],
-				"ExpectedPause()": [
-					{
-						"details": "The operation failed because the contract is not paused."
-					}
-				],
-				"OwnableInvalidOwner(address)": [
-					{
-						"details": "The owner is not a valid owner account. (eg. `address(0)`)"
-					}
-				],
-				"OwnableUnauthorizedAccount(address)": [
-					{
-						"details": "The caller account is not authorized to perform an operation."
-					}
-				]
-			},
-			"events": {
-				"Approval(address,address,uint256)": {
-					"details": "Emitted when `owner` enables `approved` to manage the `tokenId` token."
-				},
-				"ApprovalForAll(address,address,bool)": {
-					"details": "Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets."
-				},
-				"Paused(address)": {
-					"details": "Emitted when the pause is triggered by `account`."
-				},
-				"Transfer(address,address,uint256)": {
-					"details": "Emitted when `tokenId` token is transferred from `from` to `to`."
-				},
-				"Unpaused(address)": {
-					"details": "Emitted when the pause is lifted by `account`."
-				}
-			},
 			"kind": "dev",
-			"methods": {
-				"approve(address,uint256)": {
-					"details": "See {IERC721-approve}."
-				},
-				"balanceOf(address)": {
-					"details": "See {IERC721-balanceOf}."
-				},
-				"burn(uint256)": {
-					"details": "Burns `tokenId`. See {ERC721-_burn}. Requirements: - The caller must own `tokenId` or be an approved operator."
-				},
-				"getApproved(uint256)": {
-					"details": "See {IERC721-getApproved}."
-				},
-				"isApprovedForAll(address,address)": {
-					"details": "See {IERC721-isApprovedForAll}."
-				},
-				"name()": {
-					"details": "See {IERC721Metadata-name}."
-				},
-				"owner()": {
-					"details": "Returns the address of the current owner."
-				},
-				"ownerOf(uint256)": {
-					"details": "See {IERC721-ownerOf}."
-				},
-				"paused()": {
-					"details": "Returns true if the contract is paused, and false otherwise."
-				},
-				"renounceOwnership()": {
-					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
-				},
-				"safeTransferFrom(address,address,uint256)": {
-					"details": "See {IERC721-safeTransferFrom}."
-				},
-				"safeTransferFrom(address,address,uint256,bytes)": {
-					"details": "See {IERC721-safeTransferFrom}."
-				},
-				"setApprovalForAll(address,bool)": {
-					"details": "See {IERC721-setApprovalForAll}."
-				},
-				"symbol()": {
-					"details": "See {IERC721Metadata-symbol}."
-				},
-				"tokenByIndex(uint256)": {
-					"details": "See {IERC721Enumerable-tokenByIndex}."
-				},
-				"tokenOfOwnerByIndex(address,uint256)": {
-					"details": "See {IERC721Enumerable-tokenOfOwnerByIndex}."
-				},
-				"totalSupply()": {
-					"details": "See {IERC721Enumerable-totalSupply}."
-				},
-				"transferFrom(address,address,uint256)": {
-					"details": "See {IERC721-transferFrom}."
-				},
-				"transferOwnership(address)": {
-					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
-				}
-			},
+			"methods": {},
 			"version": 1
 		},
 		"userdoc": {
@@ -965,7 +587,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"timeVaults/timeVaultv2.sol": "TimeNft"
+			"timeVaults/timeVaultv2.sol": "IUniversalBalance"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},

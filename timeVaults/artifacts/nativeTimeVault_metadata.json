@@ -431,7 +431,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"timeVaults/nativeTimeVault.sol": "nativeTimeVault"
+			"timeVaults/curvanceTimeVault.sol": "nativeTimeVault"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -709,7 +709,7 @@
 				"dweb:/ipfs/QmVUSvooZKEdEdap619tcJjTLcAuH6QBdZqAzWwnAXZAWJ"
 			]
 		},
-		"timeVaults/nativeTimeVault.sol": {
+		"timeVaults/curvanceTimeVault.sol": {
 			"keccak256": "0xfef8b9440029a3448f42c22bc9c1ac27d631e9e89ac4c7452a62208d526d9958",
 			"license": "MIT",
 			"urls": [

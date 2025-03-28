@@ -1,0 +1,641 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"checkDelegationDisabled(address)": "2ffc9c72",
+			"deposit(uint256,bool)": "9a408321",
+			"depositFor(uint256,bool,address)": "a7c0e7d4",
+			"getUserApprovalIndex(address)": "d5f06e1c",
+			"isDelegate(address,address)": "5fec5d0b",
+			"multiDepositFor(uint256,uint256[],bool[],address[])": "695e14cd",
+			"multiWithdrawFor(uint256[],bool[],address,address[])": "53b1c737",
+			"rescueToken(address,uint256)": "33f3d628",
+			"setDelegateApproval(address,bool)": "c3c854b6",
+			"shiftBalance(uint256,bool)": "efcb0f83",
+			"transfer(uint256,bool,bool,address)": "be0dba9c",
+			"transferFor(uint256,bool,bool,address,address)": "08ad7740",
+			"underlying()": "6f307dc3",
+			"updateRewardDelegation()": "512739c9",
+			"userBalances(address)": "26224c64",
+			"withdraw(uint256,bool,address)": "10a2656a",
+			"withdrawFor(uint256,bool,address,address)": "1b84472b"
+		}
+	},
+	"abi": [
+		{
+			"inputs": [],
+			"name": "PluginDelegable_InvalidParameter",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "PluginDelegable__DelegatingDisabled",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "PluginDelegable__InvalidCentralRegistry",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "PluginDelegable__Unauthorized",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "Reentrancy",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "UniversalBalance__InsufficientBalance",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "UniversalBalance__InvalidParameter",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "UniversalBalance__SlippageError",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "UniversalBalance__Unauthorized",
+			"type": "error"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "owner",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "delegate",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "approvalIndex",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "bool",
+					"name": "isApproved",
+					"type": "bool"
+				}
+			],
+			"name": "DelegateApproval",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "by",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "owner",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "assets",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "bool",
+					"name": "lendingDeposit",
+					"type": "bool"
+				}
+			],
+			"name": "Deposit",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "by",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "to",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "owner",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "assets",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "bool",
+					"name": "lendingRedemption",
+					"type": "bool"
+				}
+			],
+			"name": "Withdraw",
+			"type": "event"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "user",
+					"type": "address"
+				}
+			],
+			"name": "checkDelegationDisabled",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "willLend",
+					"type": "bool"
+				}
+			],
+			"name": "deposit",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "willLend",
+					"type": "bool"
+				},
+				{
+					"internalType": "address",
+					"name": "recipient",
+					"type": "address"
+				}
+			],
+			"name": "depositFor",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "user",
+					"type": "address"
+				}
+			],
+			"name": "getUserApprovalIndex",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "user",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "delegate",
+					"type": "address"
+				}
+			],
+			"name": "isDelegate",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "depositSum",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256[]",
+					"name": "amounts",
+					"type": "uint256[]"
+				},
+				{
+					"internalType": "bool[]",
+					"name": "willLend",
+					"type": "bool[]"
+				},
+				{
+					"internalType": "address[]",
+					"name": "recipients",
+					"type": "address[]"
+				}
+			],
+			"name": "multiDepositFor",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256[]",
+					"name": "amounts",
+					"type": "uint256[]"
+				},
+				{
+					"internalType": "bool[]",
+					"name": "forceLentRedemption",
+					"type": "bool[]"
+				},
+				{
+					"internalType": "address",
+					"name": "recipient",
+					"type": "address"
+				},
+				{
+					"internalType": "address[]",
+					"name": "owners",
+					"type": "address[]"
+				}
+			],
+			"name": "multiWithdrawFor",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "token",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "rescueToken",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "delegate",
+					"type": "address"
+				},
+				{
+					"internalType": "bool",
+					"name": "isApproved",
+					"type": "bool"
+				}
+			],
+			"name": "setDelegateApproval",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "fromLent",
+					"type": "bool"
+				}
+			],
+			"name": "shiftBalance",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "amountWithdrawn",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "lendingBalanceUsed",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "forceLentRedemption",
+					"type": "bool"
+				},
+				{
+					"internalType": "bool",
+					"name": "willLend",
+					"type": "bool"
+				},
+				{
+					"internalType": "address",
+					"name": "recipient",
+					"type": "address"
+				}
+			],
+			"name": "transfer",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "amountTransferred",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "lendingBalanceUsed",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "forceLentRedemption",
+					"type": "bool"
+				},
+				{
+					"internalType": "bool",
+					"name": "willLend",
+					"type": "bool"
+				},
+				{
+					"internalType": "address",
+					"name": "recipient",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "owner",
+					"type": "address"
+				}
+			],
+			"name": "transferFor",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "amountTransferred",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "lendingBalanceUsed",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "underlying",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "updateRewardDelegation",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "user",
+					"type": "address"
+				}
+			],
+			"name": "userBalances",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "sittingBalance",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "lentBalance",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "forceLentRedemption",
+					"type": "bool"
+				},
+				{
+					"internalType": "address",
+					"name": "recipient",
+					"type": "address"
+				}
+			],
+			"name": "withdraw",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "amountWithdrawn",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "lendingBalanceUsed",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "forceLentRedemption",
+					"type": "bool"
+				},
+				{
+					"internalType": "address",
+					"name": "recipient",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "owner",
+					"type": "address"
+				}
+			],
+			"name": "withdrawFor",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "amountWithdrawn",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "lendingBalanceUsed",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		}
+	]
+}
