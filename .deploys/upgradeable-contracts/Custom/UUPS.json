@@ -1,0 +1,12 @@
+{
+  "id": 10143,
+  "network": "Custom",
+  "deployments": {
+    "0x25d800b604f254d35c04b1c568f6078d46a84a6e": {
+      "date": "2025-04-02T14:32:52.610Z",
+      "contractName": "nativeTimeVault",
+      "fork": "london",
+      "implementationAddress": "0x7e25B9E5fcd00734cfF8651B208eeEa041131b58"
+    }
+  }
+}

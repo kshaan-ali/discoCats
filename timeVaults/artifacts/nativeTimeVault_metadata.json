@@ -8,43 +8,44 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_nftPrice",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nftLimitPerAddress",
-						"type": "uint256"
-					},
-					{
 						"internalType": "address",
-						"name": "initialOwner",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nftLimit",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_joiningPeriod",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_claimingPeriod",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address payable",
-						"name": "_PartnerContract",
+						"name": "target",
 						"type": "address"
 					}
 				],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
+				"name": "AddressEmptyCode",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "implementation",
+						"type": "address"
+					}
+				],
+				"name": "ERC1967InvalidImplementation",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "ERC1967NonPayable",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "FailedCall",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "InvalidInitialization",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NotInitializing",
+				"type": "error"
 			},
 			{
 				"inputs": [
@@ -70,8 +71,32 @@
 			},
 			{
 				"inputs": [],
-				"name": "ReentrancyGuardReentrantCall",
+				"name": "UUPSUnauthorizedCallContext",
 				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "slot",
+						"type": "bytes32"
+					}
+				],
+				"name": "UUPSUnsupportedProxiableUUID",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "version",
+						"type": "uint64"
+					}
+				],
+				"name": "Initialized",
+				"type": "event"
 			},
 			{
 				"anonymous": false,
@@ -97,44 +122,26 @@
 				"inputs": [
 					{
 						"indexed": true,
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"indexed": true,
 						"internalType": "address",
-						"name": "_claimer",
+						"name": "implementation",
 						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "_claimedAmount",
-						"type": "uint256"
 					}
 				],
-				"name": "claimedNft",
+				"name": "Upgraded",
 				"type": "event"
 			},
 			{
-				"anonymous": false,
-				"inputs": [
+				"inputs": [],
+				"name": "CompoundCounter",
+				"outputs": [
 					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "_joiner",
-						"type": "address"
-					},
-					{
-						"indexed": false,
 						"internalType": "uint256",
-						"name": "_nftAmount",
+						"name": "",
 						"type": "uint256"
 					}
 				],
-				"name": "joinVaultEvent",
-				"type": "event"
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -144,6 +151,19 @@
 						"internalType": "address payable",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "UPGRADE_INTERFACE_VERSION",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -184,6 +204,55 @@
 			},
 			{
 				"inputs": [],
+				"name": "canCompound",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "canExec",
+						"type": "bool"
+					},
+					{
+						"internalType": "bytes",
+						"name": "execPayload",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_fee",
+						"type": "uint256"
+					}
+				],
+				"name": "changeFees",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_joiningPeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_claimingPeriod",
+						"type": "uint256"
+					}
+				],
+				"name": "changeTimePeriod",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "claimBack",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -200,6 +269,20 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "collectFee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "depositExternalFunds",
+				"outputs": [],
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -226,6 +309,49 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_nftPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_nftLimitPerAddress",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "initialOwner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_nftLimit",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_joiningPeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_claimingPeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address payable",
+						"name": "_PartnerContract",
+						"type": "address"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -327,9 +453,55 @@
 			},
 			{
 				"inputs": [],
+				"name": "pauseNft",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "platformFees",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "proxiableUUID",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "renounceOwnership",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalFeeCollected",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -362,6 +534,24 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "newImplementation",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "upgradeToAndCall",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -380,6 +570,19 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "receiver",
+						"type": "address"
+					}
+				],
+				"name": "withdrawAllFunds",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -402,6 +605,36 @@
 		],
 		"devdoc": {
 			"errors": {
+				"AddressEmptyCode(address)": [
+					{
+						"details": "There's no code at `target` (it is not a contract)."
+					}
+				],
+				"ERC1967InvalidImplementation(address)": [
+					{
+						"details": "The `implementation` of the proxy is invalid."
+					}
+				],
+				"ERC1967NonPayable()": [
+					{
+						"details": "An upgrade function sees `msg.value > 0` that may be lost."
+					}
+				],
+				"FailedCall()": [
+					{
+						"details": "A call to an address target failed. The target may have reverted."
+					}
+				],
+				"InvalidInitialization()": [
+					{
+						"details": "The contract is already initialized."
+					}
+				],
+				"NotInitializing()": [
+					{
+						"details": "The contract is not initializing."
+					}
+				],
 				"OwnableInvalidOwner(address)": [
 					{
 						"details": "The owner is not a valid owner account. (eg. `address(0)`)"
@@ -412,22 +645,42 @@
 						"details": "The caller account is not authorized to perform an operation."
 					}
 				],
-				"ReentrancyGuardReentrantCall()": [
+				"UUPSUnauthorizedCallContext()": [
 					{
-						"details": "Unauthorized reentrant call."
+						"details": "The call is from an unauthorized context."
+					}
+				],
+				"UUPSUnsupportedProxiableUUID(bytes32)": [
+					{
+						"details": "The storage `slot` is unsupported as a UUID."
 					}
 				]
+			},
+			"events": {
+				"Initialized(uint64)": {
+					"details": "Triggered when the contract has been initialized or reinitialized."
+				},
+				"Upgraded(address)": {
+					"details": "Emitted when the implementation is upgraded."
+				}
 			},
 			"kind": "dev",
 			"methods": {
 				"owner()": {
 					"details": "Returns the address of the current owner."
 				},
+				"proxiableUUID()": {
+					"details": "Implementation of the ERC-1822 {proxiableUUID} function. This returns the storage slot used by the implementation. It is used to validate the implementation's compatibility when performing an upgrade. IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier."
+				},
 				"renounceOwnership()": {
 					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
 				},
 				"transferOwnership(address)": {
 					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				},
+				"upgradeToAndCall(address,bytes)": {
+					"custom:oz-upgrades-unsafe-allow-reachable": "delegatecall",
+					"details": "Upgrade the implementation of the proxy to `newImplementation`, and subsequently execute the function call encoded in `data`. Calls {_authorizeUpgrade}. Emits an {Upgraded} event."
 				}
 			},
 			"version": 1
@@ -448,7 +701,7 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -508,6 +761,14 @@
 			"urls": [
 				"bzz-raw://6917f8a323e7811f041aecd4d9fd6e92455a6fba38a797ac6f6e208c7912b79d",
 				"dweb:/ipfs/QmShuYv55wYHGi4EFkDB8QfF7ZCHoKk2efyz3AWY1ExSq7"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC2981.sol": {
+			"keccak256": "0x3b017a19c1730050d0fdff8dfa9255741634699aa4217442724746ca49e13292",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://05530a2959e8be01cd88993970924cd6081c3462395f6fc0e73c034519259b05",
+				"dweb:/ipfs/QmXAG8dF9fiYE8iVWJYWxmbEMNL6RvBAxzRGq2nyLanB2M"
 			]
 		},
 		"@openzeppelin/contracts/interfaces/draft-IERC1822.sol": {
@@ -719,11 +980,11 @@
 			]
 		},
 		"timeVaults/nativeTimeVaultV2.sol": {
-			"keccak256": "0x92a6cb6bf72838f99ee6fbaef311fc457ff864342f355dd9da4a9f142cc61313",
+			"keccak256": "0xe169bc23999e3b8a38f29aba2a0997a42ec5d3b59adcb59fa55bec8ada91aa9e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://956c865d2310fec382f415915e7399218b623630e1be328ea27aec37182222b3",
-				"dweb:/ipfs/QmVy9b339BDqLCs4ieBtmKvzc98zjHsyExAApqWrgEdtxB"
+				"bzz-raw://ab33ef72798e2da995e0a42baeec75daf5af93f93382ac3dd18562e10f6dbf4f",
+				"dweb:/ipfs/QmT7Ue74h6NrhsxycZaMCerAWWpS4nZ8JZ2kissF4UdUSk"
 			]
 		}
 	},

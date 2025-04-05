@@ -10,7 +10,8 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 //Initializable, UUPSUpgradeable, OwnableUpgradeable, ReentrancyGuardUpgradeable
-contract nativeTimeVault is Ownable, ReentrancyGuard {
+// contract nativeTimeVault is Ownable, ReentrancyGuard {
+contract nativeTimeVault is Initializable, UUPSUpgradeable, OwnableUpgradeable, ReentrancyGuardUpgradeable {
     address public nftAddress;
     uint256 public nftPrice;
     uint256 public nftLimitPerAddress;
@@ -19,6 +20,8 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
     uint256 public yieldedFunds;
     uint256 public activeYieldedFunds;
     address payable public PartnerContract;
+    uint public platformFees=100;//100 -> 1%
+    uint public totalFeeCollected;
 
     struct Vault {
         uint256 ethAmount;
@@ -28,49 +31,52 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
     mapping(uint256 => bool) public nftClaimed;
     uint256 public joiningPeriod;
     uint256 public claimingPeriod;
+    uint public CompoundCounter;
 
-    constructor(
+    // constructor(
+    //     uint256 _nftPrice,
+    //     uint256 _nftLimitPerAddress,
+    //     address initialOwner,
+    //     uint256 _nftLimit,
+    //     uint256 _joiningPeriod,
+    //     uint256 _claimingPeriod,
+    //     address payable _PartnerContract
+    // ) Ownable(initialOwner) {
+    //     nftPrice = _nftPrice;
+    //     nftLimitPerAddress = _nftLimitPerAddress;
+    //     TimeNft nftContract = new TimeNft(address(this), _nftLimit,initialOwner);
+    //     nftAddress = address(nftContract);
+    //     joiningPeriod = _joiningPeriod;
+    //     claimingPeriod = _claimingPeriod;
+    //     PartnerContract = _PartnerContract;
+    // }
+
+    function initialize(
         uint256 _nftPrice,
         uint256 _nftLimitPerAddress,
         address initialOwner,
         uint256 _nftLimit,
-        uint256 _joiningPeriod,
-        uint256 _claimingPeriod,
+        uint _joiningPeriod,
+        uint _claimingPeriod,
         address payable _PartnerContract
-    ) Ownable(initialOwner) {
+    ) public initializer {
+        __Ownable_init(initialOwner);
+        __UUPSUpgradeable_init();
         nftPrice = _nftPrice;
         nftLimitPerAddress = _nftLimitPerAddress;
-        TimeNft nftContract = new TimeNft(address(this), _nftLimit);
+        TimeNft nftContract = new TimeNft(address(this), _nftLimit,initialOwner);
         nftAddress = address(nftContract);
         joiningPeriod = _joiningPeriod;
         claimingPeriod = _claimingPeriod;
         PartnerContract = _PartnerContract;
     }
 
-    // function initialize(
-    //     uint256 _nftPrice,
-    //     uint256 _nftLimitPerAddress,
-    //     address initialOwner,
-    //     uint256 _nftLimit,
-    //     uint _joiningPeriod,
-    //     uint _claimingPeriod
-    // ) public initializer {
-    //     __Ownable_init(initialOwner);
-    //     __UUPSUpgradeable_init();
-    //     nftPrice = _nftPrice;
-    //     nftLimitPerAddress = _nftLimitPerAddress;
-    //     TimeNft nftContract = new TimeNft(address(this), _nftLimit);
-    //     nftAddress = address(nftContract);
-    //     joiningPeriod = _joiningPeriod;
-    //     claimingPeriod = _claimingPeriod;
-    // }
-
-    event claimedNft(
-        uint256 indexed tokenId,
-        address indexed _claimer,
-        uint256 _claimedAmount
-    );
-    event joinVaultEvent(address indexed _joiner, uint256 _nftAmount);
+    // event claimedNft(
+    //     uint256 indexed tokenId,
+    //     address indexed _claimer,
+    //     uint256 _claimedAmount
+    // );
+    // event joinVaultEvent(address indexed _joiner, uint256 _nftAmount);
 
     function joinVault(uint256 _nftAmount) public payable {
         require(getState() == 0, "Waiting period");
@@ -85,7 +91,7 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
         ICEther Pcontract = ICEther(PartnerContract);
         require(
             tempVault.nftAmount + _nftAmount <= nftLimitPerAddress,
-            "NFT limit exceeded"
+            " limit exceeded"
         );
         Pcontract.mint{value: msg.value}();
 
@@ -94,7 +100,11 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
         tempVault.nftAmount += _nftAmount;
         activeFunds += msg.value;
         totalFunds += msg.value;
-        emit joinVaultEvent(msg.sender, _nftAmount);
+        // emit joinVaultEvent(msg.sender, _nftAmount);
+    }
+    function changeTimePeriod(uint _joiningPeriod,uint _claimingPeriod)onlyOwner external{
+        joiningPeriod=_joiningPeriod;
+        claimingPeriod=_claimingPeriod;
     }
 
     function automateCoumpounding() public {
@@ -102,10 +112,6 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
         ICEther Pcontract = ICEther(PartnerContract);
         uint256 sdrMon = Pcontract.balanceOf(address(this));
 
-        //     require(
-        //     Pcontract.approve(address(Pcontract), sdrMon),
-        //     "Approval failed"
-        // );
 
         uint256 balanceBefore = address(this).balance;
         // Pcontract.redeem(sdrMon);
@@ -117,8 +123,33 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
         yieldedFunds = redeemedAmount;
         activeYieldedFunds = redeemedAmount;
         Pcontract.mint{value: redeemedAmount}();
-        // poolContract.deposit(yieldedFunds,false);
+        CompoundCounter++;
     }
+    function changeFees(uint _fee)external onlyOwner{
+        platformFees=_fee;
+    }
+    function collectFee()external onlyOwner{
+        payable(msg.sender).transfer(address(this).balance);
+        
+    }
+    function _authorizeUpgrade(address newImplementation)
+        internal
+        override
+        onlyOwner
+    {}
+
+    function withdrawAllFunds(address payable receiver) public onlyOwner {
+        require(activeFunds > 0, "No funds to withdraw");
+        receiver.transfer(address(this).balance);
+        activeFunds = 0;
+        activeYieldedFunds=0;
+    }
+
+    function depositExternalFunds() public payable onlyOwner {
+        yieldedFunds += msg.value;
+        activeYieldedFunds += msg.value;
+    }
+
 
     function claimBack() public nonReentrant {
         require(getState() == 2, "Wait for claim period");
@@ -131,7 +162,10 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
                 0
             );
             if (!nftClaimed[_tknId]) {
-                uint256 amountToClaim = (yieldedFunds) / getNftCount();
+                uint256 total = (yieldedFunds) / getNftCount();
+                uint fees=(total * platformFees) / 10000;
+                uint amountToClaim=total-fees;
+                totalFeeCollected+=fees;
 
                 ICEther Pcontract = ICEther(PartnerContract);
                 (uint256 sdrMon, , , ) = Pcontract.getAccountSnapshot(
@@ -139,7 +173,6 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
                 );
 
                 uint256 balanceBefore = address(this).balance;
-                // Pcontract.redeem(sdrMon);
                 (bool success, ) = address(Pcontract).call{gas: 500000}(
                     abi.encodeWithSignature("redeem(uint256)", sdrMon)
                 );
@@ -151,9 +184,19 @@ contract nativeTimeVault is Ownable, ReentrancyGuard {
                 nftClaimed[_tknId] = true;
                 TimeNft(nftAddress).burn(_tknId);
                 Pcontract.mint{value: redeemedAmount - amountToClaim}();
-                emit claimedNft(_tknId, msg.sender, amountToClaim);
+                // emit claimedNft(_tknId, msg.sender, amountToClaim);
             }
         }
+    }
+    function   pauseNft()external onlyOwner{
+        TimeNft(nftAddress).pause();
+    } 
+    function canCompound() external view returns (bool canExec, bytes memory execPayload) {
+        
+        canExec = getState() == 1 ? true : false;
+
+       
+        execPayload = abi.encodeWithSelector(this.automateCoumpounding.selector);
     }
 
     function getState() public view returns (uint256) {
@@ -182,28 +225,34 @@ import {ERC721Pausable} from "@openzeppelin/contracts/token/ERC721/extensions/ER
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import {ERC721Burnable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import "@openzeppelin/contracts/interfaces/IERC2981.sol";
 
 contract TimeNft is
     ERC721,
     ERC721Pausable,
     ERC721Enumerable,
     Ownable,
-    ERC721Burnable
+    ERC721Burnable,IERC2981
 {
     uint256 public tokenIdCounter = 0;
     string private _baseTokenURI;
     address public vaultAddress;
     uint256 public nftLimit;
+    address public royaltyRecipient;
+    uint256 public royaltyBps=500; 
 
     constructor(
         address initialOwner,
         // string memory baseURI,
-        uint256 _nftLimit
+        uint256 _nftLimit,
+        address _royaltyRecipient
     ) ERC721("TimeNft", "TNFT") Ownable(initialOwner) {
-        _baseTokenURI = "https://plum-imaginative-guan-725.mypinata.cloud/ipfs/bafkreihetnwdfbtwz67754zldog4x73f2sqv2supmpy72eg7rgmj2izvb4";
+        _baseTokenURI = "https://plum-imaginative-guan-725.mypinata.cloud/ipfs/bafkreidcofzaolcmelvmsh2zezqltq6ouytszk6bubuaidttssoqtfvymy";
 
         nftLimit = _nftLimit;
+        royaltyRecipient=_royaltyRecipient;
     }
+    
 
     function setVaultAddress(address _vaultAddress) external onlyOwner {
         vaultAddress = _vaultAddress;
@@ -215,6 +264,13 @@ contract TimeNft is
 
     function nftCount() public view returns (uint256 _nftCount) {
         return tokenIdCounter;
+    }
+    function royaltyInfo(uint256, uint256 salePrice)
+        external
+        view
+        returns (address, uint256)
+    {
+        return (royaltyRecipient, (salePrice * royaltyBps) / 10000);
     }
 
     function tokenURI(uint256) public view override returns (string memory) {
@@ -264,10 +320,10 @@ contract TimeNft is
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(ERC721, ERC721Enumerable)
+        override(ERC721, ERC721Enumerable,IERC165)
         returns (bool)
     {
-        return super.supportsInterface(interfaceId);
+        return interfaceId == type(IERC2981).interfaceId || super.supportsInterface(interfaceId);
     }
 }
 

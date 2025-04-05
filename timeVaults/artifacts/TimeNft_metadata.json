@@ -16,6 +16,11 @@
 						"internalType": "uint256",
 						"name": "_nftLimit",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_royaltyRecipient",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -486,6 +491,61 @@
 				"name": "renounceOwnership",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "royaltyBps",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "salePrice",
+						"type": "uint256"
+					}
+				],
+				"name": "royaltyInfo",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "royaltyRecipient",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -973,7 +1033,7 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -1033,6 +1093,14 @@
 			"urls": [
 				"bzz-raw://6917f8a323e7811f041aecd4d9fd6e92455a6fba38a797ac6f6e208c7912b79d",
 				"dweb:/ipfs/QmShuYv55wYHGi4EFkDB8QfF7ZCHoKk2efyz3AWY1ExSq7"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC2981.sol": {
+			"keccak256": "0x3b017a19c1730050d0fdff8dfa9255741634699aa4217442724746ca49e13292",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://05530a2959e8be01cd88993970924cd6081c3462395f6fc0e73c034519259b05",
+				"dweb:/ipfs/QmXAG8dF9fiYE8iVWJYWxmbEMNL6RvBAxzRGq2nyLanB2M"
 			]
 		},
 		"@openzeppelin/contracts/interfaces/draft-IERC1822.sol": {
@@ -1244,11 +1312,11 @@
 			]
 		},
 		"timeVaults/nativeTimeVaultV2.sol": {
-			"keccak256": "0x92a6cb6bf72838f99ee6fbaef311fc457ff864342f355dd9da4a9f142cc61313",
+			"keccak256": "0xe169bc23999e3b8a38f29aba2a0997a42ec5d3b59adcb59fa55bec8ada91aa9e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://956c865d2310fec382f415915e7399218b623630e1be328ea27aec37182222b3",
-				"dweb:/ipfs/QmVy9b339BDqLCs4ieBtmKvzc98zjHsyExAApqWrgEdtxB"
+				"bzz-raw://ab33ef72798e2da995e0a42baeec75daf5af93f93382ac3dd18562e10f6dbf4f",
+				"dweb:/ipfs/QmT7Ue74h6NrhsxycZaMCerAWWpS4nZ8JZ2kissF4UdUSk"
 			]
 		}
 	},
