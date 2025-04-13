@@ -9,7 +9,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 //Initializable, UUPSUpgradeable, OwnableUpgradeable, ReentrancyGuardUpgradeable
-contract nativeTimeVault is Ownable ,ReentrancyGuard {
+contract curvanceTimeVault is Ownable ,ReentrancyGuard {
     address public nftAddress;
     uint256 public nftPrice;
     uint256 public nftLimitPerAddress;
